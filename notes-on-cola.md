@@ -107,3 +107,19 @@ There are no explicit edge routing constraints, but `routeEdge` will do shortest
 ### Arrow Heads
 
 ### Text on Nodes
+
+You will need to calculate the the width and height of the node based on the
+text and draw. The text is appended in a separate D3 call. Like most text
+needs in SVG, much of the behavior should be set in the CSS, such as the
+anchor (e.g., `middle`). 
+
+The [Sucrose
+Breakdown
+Example](https://ialab.it.monash.edu/webcola/examples/SucroseBreakdown.html)
+uses `tspan` with `dy` to make each word in the level on a separate line. It
+uses `getBBox` to then determine the extents of the text as it updates. Using
+these extents, it is able to update `width` and `height` members of the node
+object, which are then used to draw the boxes. Much of the detail is in the
+cola `tick` function.
+
+TODO: Add shorter example with copy-paste code. 
