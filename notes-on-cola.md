@@ -4,6 +4,8 @@
 
 Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdwyer/WebCola/wiki) that documents some of the API.
 
+There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html) which lists the available functions without documentation.
+
 ## Getting Started & General tips
 
 ### Graph Format
@@ -86,9 +88,16 @@ In the graph, specify a `groups` member:
                 "groups": [ ...groups indices of member groups... ] } ]
 ```
 
+[Cola Example (Non-Nested) with Explanation](https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html)
+
+
 ### Overlap Constraints
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
+
+### Edge Routing
+
+There are no explicit edge routing constraints, but `routeEdge` will do shortest path on visibility map.
 
 
 ## Drawing Help
