@@ -50,6 +50,17 @@ d3cola
 How to specify the constraints in code
 
 ### Alignment Constraints
+```
+{
+    "type": "alignment",
+    "axis": "x",
+    "offsets": [
+        {"node": "1","offset": "0"},
+        {"node": "2", "offset": "0"},
+        {"node": "3", "offset": "0"}
+    ]
+}
+```
 
 ### Grouping Constraints
 
