@@ -2,9 +2,12 @@
 
 [Cola.js website](https://ialab.it.monash.edu/webcola/)
 
-Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdwyer/WebCola/wiki) that documents some of the API.
+Note that the [Github repository for Cola.js has a
+Wiki](https://github.com/tgdwyer/WebCola/wiki) documents some of the API.
+There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html)
+itself which lists the available functions, generally without documentation.
 
-There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html) which lists the available functions without documentation.
+## Table of Contents
 
 - [Getting Started & General Tips](#getting-started-&-general-tips)
   - [Graph Format (JSON)](#graph-format)
