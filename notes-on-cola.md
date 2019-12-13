@@ -135,6 +135,15 @@ Add `.avoidOverlaps(true)` to your initial `cola` call.
 
 There are no explicit edge routing constraints, but `routeEdge` will do shortest path on visibility map.
 
+### Fixed node positions
+
+To fix the node positions, set the `fixed` field to `true` inside the node object.
+
+### Setting explicit x/y coordinates
+
+To set the x and y coordinates of the node, set `x` and `y` fields inside the node object. 
+NOTE: If the coordinates are not fixed, these values will be updated on the next tick.
+
 
 ## Drawing Help
 
