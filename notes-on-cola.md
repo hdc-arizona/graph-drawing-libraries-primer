@@ -1,6 +1,6 @@
 ### Collected institutional knowledge and advice for using cola.js
 
-[https://ialab.it.monash.edu/webcola/](Cola.js website)
+[Cola.js website](https://ialab.it.monash.edu/webcola/)
 
 #### Versions
 
