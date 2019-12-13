@@ -112,12 +112,17 @@ nodes[0].y + gap = nodes[1].y
 
 ### Grouping Constraints
 
-In the graph, specify a `groups` member:
+In the graph, specify a `groups` member as described in the [Graph
+Format](#graph-format) section:
 
 ```
   "groups": [ { "leaves": [ ...nodes indices of member nodes... ], 
                 "groups": [ ...groups indices of member groups... ] } ]
 ```
+
+With groups available, add a `.groups(graph.groups)` call to your `cola`
+setup.
+
 
 [Cola Example (Non-Nested) with Explanation](https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html)
 
@@ -136,3 +141,19 @@ There are no explicit edge routing constraints, but `routeEdge` will do shortest
 ### Arrow Heads
 
 ### Text on Nodes
+
+You will need to calculate the the width and height of the node based on the
+text and draw. The text is appended in a separate D3 call. Like most text
+needs in SVG, much of the behavior should be set in the CSS, such as the
+anchor (e.g., `middle`). 
+
+The [Sucrose
+Breakdown
+Example](https://ialab.it.monash.edu/webcola/examples/SucroseBreakdown.html)
+uses `tspan` with `dy` to make each word in the level on a separate line. It
+uses `getBBox` to then determine the extents of the text as it updates. Using
+these extents, it is able to update `width` and `height` members of the node
+object, which are then used to draw the boxes. Much of the detail is in the
+cola `tick` function.
+
+TODO: Add shorter example with copy-paste code. 
