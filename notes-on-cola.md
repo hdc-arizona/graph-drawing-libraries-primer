@@ -1,10 +1,10 @@
-## Collected institutional knowledge and advice for using cola.js
+# Collected institutional knowledge and advice for using cola.js
 
 [Cola.js website](https://ialab.it.monash.edu/webcola/)
 
-### Getting Started & General tips
+## Getting Started & General tips
 
-#### Graph Format
+### Graph Format
 
 A graph is a `JSON` object with two arrays of objects: `nodes` and `links`. Nodes are identified by their index in the `nodes` array. Links have `source` and `target` members that identify by hese `nodes` array indices.
 
@@ -20,7 +20,7 @@ Optionally, a `groups` array exist with objects describing the group. The `leave
 }
 ```
 
-#### Cola Layout
+### Cola Layout
 
 ```
 var d3cola = cola.d3adaptor(d3)
@@ -39,18 +39,18 @@ d3cola
 ```
 
 
-#### Troubleshooting
+### Troubleshooting
 
 **Versions:** If you have having difficulty getting an example to work, make sure the versions of the libraries you're using match the versions in the example. Not all examples have necessarily been updated to the latest version of the library.
 
-### Constraints
+## Constraints
 
 How to specify the constraints in code
 
-#### Alignment Constraints
+### Alignment Constraints
 
-#### Grouping Constraints
+### Grouping Constraints
 
-#### Overlap Constraints
+### Overlap Constraints
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
