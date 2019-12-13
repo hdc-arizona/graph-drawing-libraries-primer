@@ -20,9 +20,28 @@ Optionally, a `groups` array exist with objects describing the group. The `leave
 }
 ```
 
-#### Versions
+#### Cola Layout
 
-If you have having difficulty getting an example to work, make sure the versions of the libraries you're using match the versions in the example. Not all examples have necessarily been updated to the latest version of the library.
+```
+var d3cola = cola.d3adaptor(d3)
+  .size([width, height]); // e.g., SVG size
+```
+
+Several other functions dictating layout behavior can be appended here.
+
+Then, give the layout engine the graph and start:
+
+```
+d3cola
+  .nodes(graph.nodes)
+  .links(graph.links)
+  .start()
+```
+
+
+#### Troubleshooting
+
+**Versions:** If you have having difficulty getting an example to work, make sure the versions of the libraries you're using match the versions in the example. Not all examples have necessarily been updated to the latest version of the library.
 
 ### Constraints
 
@@ -31,3 +50,7 @@ How to specify the constraints in code
 #### Alignment Constraints
 
 #### Grouping Constraints
+
+#### Overlap Constraints
+
+Add `.avoidOverlaps(true)` to your initial `cola` call.
