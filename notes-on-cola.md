@@ -2,11 +2,31 @@
 
 [Cola.js website](https://ialab.it.monash.edu/webcola/)
 
-Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdwyer/WebCola/wiki) that documents some of the API.
+Note that the [Github repository for Cola.js has a
+Wiki](https://github.com/tgdwyer/WebCola/wiki) documents some of the API.
+There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html)
+itself which lists the available functions, generally without documentation.
 
-There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html) which lists the available functions without documentation.
+## Table of Contents
 
-## Getting Started & General tips
+- [Getting Started & General Tips](#getting-started-&-general-tips)
+  - [Graph Format (JSON)](#graph-format)
+  - [Cola Layout Initialization](#cola-layout)
+  - [Troubleshooting](#troubleshooting)
+- [Constraints](#constraints)
+  - [Alignment Constraints](#alignment-constraints)
+  - [Gap Constraints](#gap-constraints) (a.k.a. Inequality or Separation
+    Constraints)
+  - [Grouping Constraints](#grouping-constraints) (a.k.a. Clustering)
+  - [Overlap Constraints](#overlap-constraints) (a.k.a. Avoding Overlap)
+  - [Edge Routing](#edge-routing)
+  - [Fixed Node Positions](#fixed-node-positions)
+- [Drawing Help](#drawing-help)
+  - [Arrow Heads](#arrow-heads)
+  - [Node Labels](#text-on-nodes)
+
+
+## Getting Started & General Tips
 
 ### Graph Format
 
@@ -41,6 +61,8 @@ d3cola
   .links(graph.links)
   .start()
 ```
+
+TODO: Explain `start()` and `ticks`
 
 
 ### Troubleshooting
@@ -99,6 +121,7 @@ d3cola.constraints(myconstraints);
 ```
 
 ### Alignment Constraints
+
 ```
 {
     "type": "alignment",
@@ -120,8 +143,10 @@ The `node` field contains the index of the nodes in the `d3.nodes(nodes)` array.
 
 TODO: Update the direction of the offset. Does -ve offset mean to the left/top and vice-versa.
 
-### Separation(Inequality) Constraints
-The separation constraints add a minimum separation between a pair of nodes along x/y axis.
+
+### Gap Constraints
+
+The gap constraints add a minimum separation between a pair of nodes along x/y axis.
 
 ```
 {"axis":"y", "left":0, "right":1, "gap":25}
@@ -140,7 +165,7 @@ NOTE: If the constraints have cyclic dependency between them, the solver will no
 
 
 
-Separation constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
+Gap constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
 
 ```
 {"axis":"y", "left":0, "right":1, "gap":25, "equality":"true"}
@@ -202,10 +227,9 @@ svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining grap
     .append("path")
     .attr("d", "M 0 0 12 6 0 12 3 6")     //defining the triangle(arrowhead)
     .style("fill", "black");
-
-
 ```
-[Click here to see more explanation] (http://tutorials.jenkov.com/svg/marker-element.html)
+
+[See the Jenkov tutorial for more explanation](http://tutorials.jenkov.com/svg/marker-element.html)
 
 ### Drawing directed Graphs (Flow Layout)
 Flow layout adds downward separation constraints for each edge. For a directed edge (1,2) where 1 is the node index of the source node and 2 is the index for the target node, it adds constraints of the form 
@@ -247,4 +271,57 @@ these extents, it is able to update `width` and `height` members of the node
 object, which are then used to draw the boxes. Much of the detail is in the
 cola `tick` function.
 
-TODO: Add shorter example with copy-paste code. 
+Here's a sketch:
+
+CSS:
+```
+.labels {
+  font: 8pt sans-serif;
+  text-anchor: middle;
+}
+```
+
+JS:
+```
+var node_group = svg.append('g');
+var label_group = svg.append('g'); // Ensure labels always on top of nodes
+var margin = 2;
+
+// Append nodes as normal
+var node = node_group.selectAll('.nodes')
+    .data(graph.nodes)
+  .enter.append('rect')
+    .attr('class', 'nodes');
+
+// Append labels as normal
+var label = link_group.selectAll('.labels')
+    .data(graph.nodes)
+  .enter.append('text')
+    .attr('class', 'labels')
+    .text(d => d.name);
+
+// While Cola updates the layout, we can update the size
+// and placements of node and text for the labels
+d3cola.on('tick', function() {
+  // Find the bounding box of the text labels.
+  // They determine how big the node has to be.
+  label.each(function(d) {
+    var b = this.getBBox();
+    d.width = b.width + 2 * margin + 2;
+    d.height = b.height + 2 * margin + 2;
+  })
+
+  // Update node position with the tick.
+  // Update width & height based on earlier bounding box calculation
+  node.attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('width', d => d.width)
+      .attr('height', d=> d.height);
+ 
+  // Update label position with the tick. Depending on your CSS,
+  // adjustments will need to be made to center in the node to your liking.
+  label.attr('x', d => { return d.x + d.width/2; })
+       .attr('y', d => { return d.y + margin + d.height/2; });
+});
+
+```
