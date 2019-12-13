@@ -164,10 +164,9 @@ svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining grap
     .append("path")
     .attr("d", "M 0 0 12 6 0 12 3 6")     //defining the triangle(arrowhead)
     .style("fill", "black");
-
-
 ```
-[Click here to see more explanation] (http://tutorials.jenkov.com/svg/marker-element.html)
+
+[See the Jenkov tutorial for more explanation](http://tutorials.jenkov.com/svg/marker-element.html)
 
 
 
