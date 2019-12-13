@@ -2,6 +2,8 @@
 
 [Cola.js website](https://ialab.it.monash.edu/webcola/)
 
+Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdwyer/WebCola/wiki) that documents some of the API.
+
 ## Getting Started & General tips
 
 ### Graph Format
