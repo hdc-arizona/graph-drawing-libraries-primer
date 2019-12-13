@@ -21,6 +21,7 @@ itself which lists the available functions, generally without documentation.
   - [Overlap Constraints](#overlap-constraints) (a.k.a. Avoding Overlap)
   - [Edge Routing](#edge-routing)
   - [Fixed Node Positions](#fixed-node-positions)
+  - [Directed Graphs (FlowLayout)](#directed-graphs)
 - [Drawing Help](#drawing-help)
   - [Arrow Heads](#arrow-heads)
   - [Node Labels](#text-on-nodes)
@@ -218,28 +219,7 @@ To fix the node positions, set the `fixed` field to `true` inside the node objec
 To set the x and y coordinates of the node, set `x` and `y` fields inside the node object. 
 NOTE: If the coordinates are not fixed, these values will be updated on the next tick.
 
-
-## Drawing Help
-
-### Arrow Heads
-To have a directed graph layout, you have to add arrowhead on the edges manually. The code structure for adding an arrowhead should look like this:
-
-```
-svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining graphical objects which can be applied to elements
-    .attr("id", "triangle")                //we are basically adding a marker 
-    .attr("refX", 15)                
-    .attr("refY", -1.5)
-    .attr("markerWidth", 6)
-    .attr("markerHeight", 6)
-    .attr("orient", "auto")               //orientation of the marker is auto so that it can fit the direction of the path that uses it   
-    .append("path")
-    .attr("d", "M 0 0 12 6 0 12 3 6")     //defining the triangle(arrowhead)
-    .style("fill", "black");
-```
-
-[See the Jenkov tutorial for more explanation](http://tutorials.jenkov.com/svg/marker-element.html)
-
-### Drawing directed Graphs (Flow Layout)
+### Directed Graphs 
 Flow layout adds downward separation constraints for each edge. For a directed edge (1,2) where 1 is the node index of the source node and 2 is the index for the target node, it adds constraints of the form 
 
 ```
@@ -261,6 +241,28 @@ The default direction for flow layout is along `y` axis which achieves vertical 
 Flow layout also supports `x` axis which achieves left-to-right layout.
 
 Instead of setting a global minimum separation value of `gap` between each edge endpoints, we can set custom function with link accessor to set different minimum separation for each edge.
+
+
+## Drawing Help
+
+### Arrow Heads
+To have a directed graph layout, you have to add arrowhead on the edges manually. The code structure for adding an arrowhead should look like this:
+
+```
+svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining graphical objects which can be applied to elements
+    .attr("id", "triangle")                //we are basically adding a marker 
+    .attr("refX", 15)                
+    .attr("refY", -1.5)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")               //orientation of the marker is auto so that it can fit the direction of the path that uses it   
+    .append("path")
+    .attr("d", "M 0 0 12 6 0 12 3 6")     //defining the triangle(arrowhead)
+    .style("fill", "black");
+```
+
+[See the Jenkov tutorial for more explanation](http://tutorials.jenkov.com/svg/marker-element.html)
+
 
 
 ### Text on Nodes
