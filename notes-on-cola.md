@@ -83,12 +83,17 @@ TODO: Update the direction of the offset. Does -ve offset mean to the left/top a
 
 ### Grouping Constraints
 
-In the graph, specify a `groups` member:
+In the graph, specify a `groups` member as described in the [Graph
+Format](#graph-format) section:
 
 ```
   "groups": [ { "leaves": [ ...nodes indices of member nodes... ], 
                 "groups": [ ...groups indices of member groups... ] } ]
 ```
+
+With groups available, add a `.groups(graph.groups)` call to your `cola`
+setup.
+
 
 [Cola Example (Non-Nested) with Explanation](https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html)
 
