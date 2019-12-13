@@ -54,7 +54,6 @@ To specify the constraints, we create an array with constraint objects e.g. `myc
 ```
 d3cola.constraints(myconstraints);
 ```
-where myconstraints contains 
 
 ### Alignment Constraints
 ```
@@ -68,6 +67,11 @@ where myconstraints contains
     ]
 }
 ```
+
+Set the `type` to `alignment`
+The alignment is axis-aligned. The `axis` supports two directions `x` and `y`.
+
+
 
 ### Grouping Constraints
 
