@@ -13,8 +13,10 @@ Optionally, a `groups` array exist with objects describing the group. The `leave
 ```
 {
   "nodes": [ ...objects... ],
-  "links": [ { "source": src_id, "target": target_id } ], <-- these IDs are indices in the nodes array!
-  "groups": [ { "leaves": [ ...nodes indices of member nodes... ], "groups": [ ...groups indices of member groups... ] } ]
+  "links": [ { "source": src_id, "target": target_id } ], 
+             // ^-- these IDs are indices in the nodes array!
+  "groups": [ { "leaves": [ ...nodes indices of member nodes... ], 
+                "groups": [ ...groups indices of member groups... ] } ]
 }
 ```
 
