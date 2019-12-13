@@ -79,7 +79,36 @@ The `node` field contains the index of the nodes in the `d3.nodes(nodes)` array.
 
 TODO: Update the direction of the offset. Does -ve offset mean to the left/top and vice-versa.
 
+### Separation(Inequality) Constraints
+The separation constraints add a minimum separation between a pair of nodes along x/y axis.
 
+```
+{"axis":"y", "left":0, "right":1, "gap":25}
+```
+
+This code specifies that the center of `nodes[0]` must be at least 25 pixels
+above the center of `nodes[1]`. In other words, it is an inequality constraint of the form
+
+```
+nodes[0].y + gap <= nodes[1].y
+```
+
+The `axis` supports both `x` and `y` directions. The left/right is analogous to top/bottom when the axis is `y`.
+
+NOTE: If the constraints have cyclic dependency between them, the solver will not apply any constraints. [See here](https://github.com/tgdwyer/WebCola/wiki/Constraints) for more details.
+
+
+
+Separation constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
+
+```
+{"axis":"y", "left":0, "right":1, "gap":25, "equality":"true"}
+```
+
+The code specifies the following:
+```
+nodes[0].y + gap = nodes[1].y
+```
 
 ### Grouping Constraints
 
