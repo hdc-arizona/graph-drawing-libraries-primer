@@ -40,10 +40,6 @@ d3cola
   .start()
 ```
 
-### Retreiving Node Coordinates
-
-After running the layout, each node object will have an `x` and `y` member with coordinates in SVG space.
-
 
 ### Troubleshooting
 
@@ -53,12 +49,12 @@ After running the layout, each node object will have an `x` and `y` member with 
 
 How to specify the constraints in code
 
-To specify the constraints, we create an array named `constraints`
-and set it as
+To specify the constraints, we create an array with constraint objects e.g. `myconstraints` and set it as
 
 ```
 d3cola.constraints(myconstraints);
 ```
+where myconstraints contains 
 
 ### Alignment Constraints
 ```
@@ -85,7 +81,3 @@ In the graph, specify a `groups` member:
 ### Overlap Constraints
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
-
-### Edge Routing
-
-Not supported, you're on your own.
