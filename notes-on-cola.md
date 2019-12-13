@@ -51,6 +51,13 @@ How to specify the constraints in code
 
 ### Grouping Constraints
 
+In the graph, specify a `groups` member:
+
+```
+  "groups": [ { "leaves": [ ...nodes indices of member nodes... ], 
+                "groups": [ ...groups indices of member groups... ] } ]
+```
+
 ### Overlap Constraints
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
