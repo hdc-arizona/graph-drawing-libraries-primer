@@ -91,6 +91,9 @@ In the graph, specify a `groups` member:
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
 
+### Edge Routing
+
+There are no explicit edge routing constraints, but `routeEdge` will do shortest path on visibility map.
 
 ## Drawing Help
 
