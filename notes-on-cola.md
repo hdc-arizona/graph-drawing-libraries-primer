@@ -127,4 +127,57 @@ these extents, it is able to update `width` and `height` members of the node
 object, which are then used to draw the boxes. Much of the detail is in the
 cola `tick` function.
 
-TODO: Add shorter example with copy-paste code. 
+Here's a sketch:
+
+CSS:
+```
+.labels {
+  font: 8pt sans-serif;
+  text-anchor: middle;
+}
+```
+
+JS:
+```
+var node_group = svg.append('g');
+var label_group = svg.append('g'); // Ensure labels always on top of nodes
+var margin = 2;
+
+// Append nodes as normal
+var node = node_group.selectAll('.nodes')
+    .data(graph.nodes)
+  .enter.append('rect')
+    .attr('class', 'nodes');
+
+// Append labels as normal
+var label = link_group.selectAll('.labels')
+    .data(graph.nodes)
+  .enter.append('text')
+    .attr('class', 'labels')
+    .text(d => d.name);
+
+// While Cola updates the layout, we can update the size
+// and placements of node and text for the labels
+d3cola.on('tick', function() {
+  // Find the bounding box of the text labels.
+  // They determine how big the node has to be.
+  label.each(function(d) {
+    var b = this.getBBox();
+    d.width = b.width + 2 * margin + 2;
+    d.height = b.height + 2 * margin + 2;
+  })
+
+  // Update node position with the tick.
+  // Update width & height based on earlier bounding box calculation
+  node.attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('width', d => d.width)
+      .attr('height', d=> d.height);
+ 
+  // Update label position with the tick. Depending on your CSS,
+  // adjustments will need to be made to center in the node to your liking.
+  label.attr('x', d => { return d.x + d.width/2; })
+       .attr('y', d => { return d.y + margin + d.height/2; });
+});
+
+```
