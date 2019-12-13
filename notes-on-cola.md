@@ -68,8 +68,11 @@ d3cola.constraints(myconstraints);
 }
 ```
 
-Set the `type` to `alignment`
+Set the `type` to `alignment`.
+
 The alignment is axis-aligned. The `axis` supports two directions `x` and `y`.
+
+The nodes are listed in the field named `offsets`.
 
 
 
