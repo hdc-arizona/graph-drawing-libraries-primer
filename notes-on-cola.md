@@ -6,7 +6,24 @@ Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdw
 
 There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html) which lists the available functions without documentation.
 
-## Getting Started & General tips
+- [Getting Started & General Tips](#getting-started-&-general-tips)
+  - [Graph Format (JSON)](#graph-format)
+  - [Cola Layout Initialization](#cola-layout)
+  - [Troubleshooting](#troubleshooting)
+- [Constraints](#constraints)
+  - [Alignment Constraints](#alignment-constraints)
+  - [Gap Constraints](#gap-constraints) (a.k.a. Inequality or Separation
+    Constraints)
+  - [Grouping Constraints](#grouping-constraints) (a.k.a. Clustering)
+  - [Overlap Constraints](#overlap-constraints) (a.k.a. Avoding Overlap)
+  - [Edge Routing](#edge-routing)
+  - [Fixed Node Positions](#fixed-node-positions)
+- [Drawing Help](#drawing-help)
+  - [Arrow Heads](#arrow-heads)
+  - [Node Labels](#text-on-nodes)
+
+
+## Getting Started & General Tips
 
 ### Graph Format
 
@@ -41,6 +58,8 @@ d3cola
   .links(graph.links)
   .start()
 ```
+
+TODO: Explain `start()` and `ticks`
 
 
 ### Troubleshooting
@@ -81,7 +100,7 @@ The `node` field contains the index of the nodes in the `d3.nodes(nodes)` array.
 TODO: Update the direction of the offset. Does -ve offset mean to the left/top and vice-versa.
 
 
-### Gap (Inequality) Constraints -- Separating Individual Nodes
+### Gap Constraints
 
 The gap constraints add a minimum separation between a pair of nodes along x/y axis.
 
