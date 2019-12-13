@@ -47,6 +47,47 @@ d3cola
 
 **Versions:** If you have having difficulty getting an example to work, make sure the versions of the libraries you're using match the versions in the example. Not all examples have necessarily been updated to the latest version of the library.
 
+
+## Specifying link lengths
+
+We can set the ideal length for all the links using 
+
+```
+cola.d3adaptor().linkDistance(30) 
+```
+Here, Cola will try to keep the lengths of all edges close to the value of 30.
+
+### Set custom edge lengths for each edge (Link accessor)
+To set custom ideal lengths for each edge, use the following code:
+
+```
+var d3cola = cola.d3adaptor()
+            .linkDistance(function (l) { return l.length })
+```
+
+In the above example, the length for each edge is taken from the `links` array where each object has a `length` attribute along with the `source` and `target` attribute.
+
+e.g. 
+```
+"links": [{"source": src_id, "target": target_id, "length": 20}, ...]
+
+```
+
+The ideal lengths can also be specified using predefined functions such as `symmetricDiffLinkLengths` and `jaccardLinkLengths`.
+
+We set these in the following way 
+
+```
+d3cola
+  .links(links)
+  .jaccardLinkLengths(40)
+  .start();
+```
+
+The jaccard/symmetric link lengths are computed in the `start` function.
+For their definition, visit [cola's wiki page](https://github.com/tgdwyer/WebCola/wiki/link-lengths) .
+
+
 ## Constraints
 
 How to specify the constraints in code
@@ -95,7 +136,7 @@ nodes[0].y + gap <= nodes[1].y
 
 The `axis` supports both `x` and `y` directions. The left/right is analogous to top/bottom when the axis is `y`.
 
-NOTE: If the constraints have cyclic dependency between them, the solver will not apply any constraints. [See here](https://github.com/tgdwyer/WebCola/wiki/Constraints) for more details.
+NOTE: If the constraints have cyclic dependency between them, the solver will not apply any constraints. [Click here](https://github.com/tgdwyer/WebCola/wiki/Constraints) for more details.
 
 
 
@@ -166,6 +207,28 @@ svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining grap
 ```
 [Click here to see more explanation] (http://tutorials.jenkov.com/svg/marker-element.html)
 
+### Drawing directed Graphs (Flow Layout)
+Flow layout adds downward separation constraints for each edge. For a directed edge (1,2) where 1 is the node index of the source node and 2 is the index for the target node, it adds constraints of the form 
+
+```
+nodes[1].y + gap <= nodes[2].y
+```
+
+This can be done using the following code
+
+```
+d3cola
+  .flowLayout('y', gap)
+  ...
+```
+
+The [example from webcola](https://ialab.it.monash.edu/webcola/examples/unix.html) says "flowLayout causes all edges not involved in a cycle (strongly connected component) to have a separation constraint generated between their source and sink, with a minimum spacing set to gap"
+
+
+The default direction for flow layout is along `y` axis which achieves vertical layout.
+Flow layout also supports `x` axis which achieves left-to-right layout.
+
+Instead of setting a global minimum separation value of `gap` between each edge endpoints, we can set custom function with link accessor to set different minimum separation for each edge.
 
 
 ### Text on Nodes
