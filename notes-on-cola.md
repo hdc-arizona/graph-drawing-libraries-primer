@@ -105,5 +105,24 @@ There are no explicit edge routing constraints, but `routeEdge` will do shortest
 ## Drawing Help
 
 ### Arrow Heads
+To have a directed graph layout, you have to add arrowhead on the edges manually. The code structure for adding an arrowhead should look like this:
+
+```
+svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining graphical objects which can be applied to elements
+    .attr("id", "triangle")                //we are basically adding a marker 
+    .attr("refX", 15)                
+    .attr("refY", -1.5)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")               //orientation of the marker is auto so that it can fit the direction of the path that uses it   
+    .append("path")
+    .attr("d", "M 0 0 12 6 0 12 3 6")     //defining the triangle(arrowhead)
+    .style("fill", "black");
+
+
+```
+[Click here to see more explanation] (http://tutorials.jenkov.com/svg/marker-element.html)
+
+
 
 ### Text on Nodes
