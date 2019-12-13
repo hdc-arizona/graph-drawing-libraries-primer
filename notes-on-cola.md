@@ -85,6 +85,8 @@ In the graph, specify a `groups` member:
                 "groups": [ ...groups indices of member groups... ] } ]
 ```
 
+[Cola Example (Non-Nested) with Explanation](https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html)
+
 ### Overlap Constraints
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
