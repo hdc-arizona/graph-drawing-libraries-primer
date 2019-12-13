@@ -79,16 +79,50 @@ The `node` field contains the index of the nodes in the `d3.nodes(nodes)` array.
 
 TODO: Update the direction of the offset. Does -ve offset mean to the left/top and vice-versa.
 
+### Separation(Inequality) Constraints
+The separation constraints add a minimum separation between a pair of nodes along x/y axis.
 
+```
+{"axis":"y", "left":0, "right":1, "gap":25}
+```
+
+This code specifies that the center of `nodes[0]` must be at least 25 pixels
+above the center of `nodes[1]`. In other words, it is an inequality constraint of the form
+
+```
+nodes[0].y + gap <= nodes[1].y
+```
+
+The `axis` supports both `x` and `y` directions. The left/right is analogous to top/bottom when the axis is `y`.
+
+NOTE: If the constraints have cyclic dependency between them, the solver will not apply any constraints. [See here](https://github.com/tgdwyer/WebCola/wiki/Constraints) for more details.
+
+
+
+Separation constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
+
+```
+{"axis":"y", "left":0, "right":1, "gap":25, "equality":"true"}
+```
+
+The code specifies the following:
+```
+nodes[0].y + gap = nodes[1].y
+```
 
 ### Grouping Constraints
 
-In the graph, specify a `groups` member:
+In the graph, specify a `groups` member as described in the [Graph
+Format](#graph-format) section:
 
 ```
   "groups": [ { "leaves": [ ...nodes indices of member nodes... ], 
                 "groups": [ ...groups indices of member groups... ] } ]
 ```
+
+With groups available, add a `.groups(graph.groups)` call to your `cola`
+setup.
+
 
 [Cola Example (Non-Nested) with Explanation](https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html)
 
@@ -126,3 +160,19 @@ svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining grap
 
 
 ### Text on Nodes
+
+You will need to calculate the the width and height of the node based on the
+text and draw. The text is appended in a separate D3 call. Like most text
+needs in SVG, much of the behavior should be set in the CSS, such as the
+anchor (e.g., `middle`). 
+
+The [Sucrose
+Breakdown
+Example](https://ialab.it.monash.edu/webcola/examples/SucroseBreakdown.html)
+uses `tspan` with `dy` to make each word in the level on a separate line. It
+uses `getBBox` to then determine the extents of the text as it updates. Using
+these extents, it is able to update `width` and `height` members of the node
+object, which are then used to draw the boxes. Much of the detail is in the
+cola `tick` function.
+
+TODO: Add shorter example with copy-paste code. 
