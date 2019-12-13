@@ -58,6 +58,7 @@ d3cola.constraints(myconstraints);
 ```
 
 ### Alignment Constraints
+
 ```
 {
     "type": "alignment",
@@ -79,8 +80,10 @@ The `node` field contains the index of the nodes in the `d3.nodes(nodes)` array.
 
 TODO: Update the direction of the offset. Does -ve offset mean to the left/top and vice-versa.
 
-### Separation(Inequality) Constraints
-The separation constraints add a minimum separation between a pair of nodes along x/y axis.
+
+### Gap (Inequality) Constraints -- Separating Individual Nodes
+
+The gap constraints add a minimum separation between a pair of nodes along x/y axis.
 
 ```
 {"axis":"y", "left":0, "right":1, "gap":25}
@@ -99,7 +102,7 @@ NOTE: If the constraints have cyclic dependency between them, the solver will no
 
 
 
-Separation constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
+Gap constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
 
 ```
 {"axis":"y", "left":0, "right":1, "gap":25, "equality":"true"}
