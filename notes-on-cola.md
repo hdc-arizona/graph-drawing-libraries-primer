@@ -4,8 +4,6 @@
 
 Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdwyer/WebCola/wiki) that documents some of the API.
 
-There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html) which lists the available functions without documentation.
-
 ## Getting Started & General tips
 
 ### Graph Format
@@ -63,9 +61,9 @@ d3cola.constraints(myconstraints);
     "type": "alignment",
     "axis": "x",
     "offsets": [
-        {"node": "1","offset": "0"},
+        {"node": "1","offset": "-20"},
         {"node": "2", "offset": "0"},
-        {"node": "3", "offset": "0"}
+        {"node": "3", "offset": "10"}
     ]
 }
 ```
@@ -74,7 +72,8 @@ Set the `type` to `alignment`.
 
 The alignment is axis-aligned. The `axis` supports two directions `x` and `y`.
 
-The nodes are listed in the field named `offsets`.
+The nodes are listed in the array named `offsets`. This array contains a list of objects.
+The `node` field contains the index of the nodes in the `d3.nodes(nodes)` array. The `offset` defines if there is any offset to the left or right when applying the alignment constraints. For e.g. in the example above, nodes with indices 1, 2, and 3 will be aligned along x axis. An `offset` of 0 causes the nodes to be aligned at the center. To align  
 
 
 
@@ -87,15 +86,10 @@ In the graph, specify a `groups` member:
                 "groups": [ ...groups indices of member groups... ] } ]
 ```
 
-[Cola Example (Non-Nested) with Explanation](https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html)
-
 ### Overlap Constraints
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
 
-### Edge Routing
-
-There are no explicit edge routing constraints, but `routeEdge` will do shortest path on visibility map.
 
 ## Drawing Help
 
