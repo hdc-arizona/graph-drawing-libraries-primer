@@ -64,6 +64,14 @@ d3cola
 
 TODO: Explain `start()` and `ticks`
 
+```
+d3cola
+  .start(10,15,20);
+```
+
+From the [cola website](https://ialab.it.monash.edu/webcola/)
+"The start() method includes up to three integer arguments. In the example above, start will initially apply 10 iterations of layout with no constraints, 15 iterations with only structural (user-specified) constraints and 20 iterations of layout with all constraints including non-overlap constraints. Specifying such a schedule is useful to allow the graph to untangle before making it relatively "rigid" with constraints."
+
 
 ### Troubleshooting
 
