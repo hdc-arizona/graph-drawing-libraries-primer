@@ -206,6 +206,58 @@ setup.
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
 
+### Bounding area Constraints
+
+If you want your graph to be inside a given bounding box, you have to define the bound area of the box first. Then you have to make two dummy nodes: one for the top left corner of the box, and one for the bottom right. You can do that like this:
+
+```
+var pageBounds = { x: 100, y: 50, width: 700, height: 400 },
+    page = svg.append('rect').attr('id', 'page').attr(pageBounds),
+    nodeRadius = 10,   
+
+    //using the slice() function to get the actual nodes                                               
+    realGraphNodes = graph.nodes.slice(0),
+
+    //dummy node for the top left corner of the box
+    topLeft = { x: pageBounds.x, y: pageBounds.y, fixed: true },
+    //adding the dummy node in the list of nodes and getting the index of the dummy node  
+    tlIndex = graph.nodes.push(topLeft) - 1,
+
+    //dummy node for the bottom right corner of the box
+    bottomRight = { x: pageBounds.x + pageBounds.width, y: pageBounds.y + pageBounds.height, fixed: true }, 
+    //adding the dummy node in the list of nodes and getting the index of the dummy node
+    brIndex = graph.nodes.push(bottomRight) - 1,
+```
+
+Then you have to add the constraints that you want for each original node you have in your graph:
+
+```
+    constraints = [];
+    for (var i = 0; i < realGraphNodes.length; i++) {
+        
+        //adding the constraits for each real node in the graph
+        constraints.push({ axis: 'x', type: 'separation', left: tlIndex, right: i, gap: nodeRadius });
+        constraints.push({ axis: 'y', type: 'separation', left: tlIndex, right: i, gap: nodeRadius });
+        constraints.push({ axis: 'x', type: 'separation', left: i, right: brIndex, gap: nodeRadius });
+        constraints.push({ axis: 'y', type: 'separation', left: i, right: brIndex, gap: nodeRadius });
+    }
+```
+
+Then you can create the node visuals and bind the original nodes to them:
+
+```
+var node = svg.selectAll(".node")
+    .data(realGraphNodes)
+    .enter().append("circle")
+    .attr("class", "node")
+    .attr("r", nodeRadius)
+    .style("fill", function (d) { return color(d.group); })
+    .call(cola.drag);       //this is for dragging the graph on the surface 
+```
+
+[See this webcola turorial](https://ialab.it.monash.edu/webcola/examples/pageBoundsConstraints.html)
+
+
 ### Edge Routing
 
 There are no explicit edge routing constraints, but `routeEdge` will do shortest path on visibility map.
@@ -336,53 +388,4 @@ d3cola.on('tick', function() {
 
 ```
 
-
-### Separation Constraits (Bounding area)
-
-If you want your graph to be inside a given bounding box, you have to define the bound area of the box first. Then you have to make two dummy nodes: one for the top left corner of the box, and one for the bottom right. You can do that like this:
-
-```
-var pageBounds = { x: 100, y: 50, width: 700, height: 400 },
-    page = svg.append('rect').attr('id', 'page').attr(pageBounds),
-    nodeRadius = 10,   
-
-    //using the slice() function to get the actual nodes                                               
-    realGraphNodes = graph.nodes.slice(0),
-
-    //dummy node for the top left corner of the box
-    topLeft = { x: pageBounds.x, y: pageBounds.y, fixed: true },
-    //adding the dummy node in the list of nodes and getting the index of the dummy node  
-    tlIndex = graph.nodes.push(topLeft) - 1,
-
-    //dummy node for the bottom right corner of the box
-    bottomRight = { x: pageBounds.x + pageBounds.width, y: pageBounds.y + pageBounds.height, fixed: true }, 
-    //adding the dummy node in the list of nodes and getting the index of the dummy node
-    brIndex = graph.nodes.push(bottomRight) - 1,
-```
-
-Then you have to add the constraits that you want for each original node you have in your graph:
-
-```
-    constraints = [];
-    for (var i = 0; i < realGraphNodes.length; i++) {
-        
-        //adding the constraits for each real node in the graph
-        constraints.push({ axis: 'x', type: 'separation', left: tlIndex, right: i, gap: nodeRadius });
-        constraints.push({ axis: 'y', type: 'separation', left: tlIndex, right: i, gap: nodeRadius });
-        constraints.push({ axis: 'x', type: 'separation', left: i, right: brIndex, gap: nodeRadius });
-        constraints.push({ axis: 'y', type: 'separation', left: i, right: brIndex, gap: nodeRadius });
-    }
-```
-
-Then you can create the node visuals and bind the original nodes to them:
-
-```
-var node = svg.selectAll(".node")
-    .data(realGraphNodes)
-    .enter().append("circle")
-    .attr("class", "node")
-    .attr("r", nodeRadius)
-    .style("fill", function (d) { return color(d.group); })
-    .call(cola.drag);       //this is for dragging the graph on the surface 
-```
 
