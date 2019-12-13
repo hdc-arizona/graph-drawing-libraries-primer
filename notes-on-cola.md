@@ -4,6 +4,8 @@
 
 Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdwyer/WebCola/wiki) that documents some of the API.
 
+There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html) which lists the available functions without documentation.
+
 ## Getting Started & General tips
 
 ### Graph Format
