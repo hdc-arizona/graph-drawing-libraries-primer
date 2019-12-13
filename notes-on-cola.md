@@ -49,6 +49,13 @@ d3cola
 
 How to specify the constraints in code
 
+To specify the constraints, we create an array named "constraints"
+and set it as
+
+```
+d3cola.constraints(myconstraints);
+```
+
 ### Alignment Constraints
 ```
 {
