@@ -2,11 +2,32 @@
 
 [Cola.js website](https://ialab.it.monash.edu/webcola/)
 
-Note that the [Github repository for Cola.js has a Wiki](https://github.com/tgdwyer/WebCola/wiki) that documents some of the API.
+Note that the [Github repository for Cola.js has a
+Wiki](https://github.com/tgdwyer/WebCola/wiki) documents some of the API.
+There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html)
+itself which lists the available functions, generally without documentation.
 
-There's also the [API](https://ialab.it.monash.edu/webcola/doc/index.html) which lists the available functions without documentation.
+## Table of Contents
 
-## Getting Started & General tips
+- [Getting Started & General Tips](#getting-started-&-general-tips)
+  - [Graph Format (JSON)](#graph-format)
+  - [Cola Layout Initialization](#cola-layout)
+  - [Troubleshooting](#troubleshooting)
+- [Constraints](#constraints)
+  - [Alignment Constraints](#alignment-constraints)
+  - [Gap Constraints](#gap-constraints) (a.k.a. Inequality or Separation
+    Constraints)
+  - [Grouping Constraints](#grouping-constraints) (a.k.a. Clustering)
+  - [Overlap Constraints](#overlap-constraints) (a.k.a. Avoding Overlap)
+  - [Edge Routing](#edge-routing)
+  - [Fixed Node Positions](#fixed-node-positions)
+  - [Directed Graphs (FlowLayout)](#directed-graphs)
+- [Drawing Help](#drawing-help)
+  - [Arrow Heads](#arrow-heads)
+  - [Node Labels](#text-on-nodes)
+
+
+## Getting Started & General Tips
 
 ### Graph Format
 
@@ -42,10 +63,61 @@ d3cola
   .start()
 ```
 
+TODO: Explain `start()` and `ticks`
+
+```
+d3cola
+  .start(10,15,20);
+```
+
+From the [cola website](https://ialab.it.monash.edu/webcola/)
+"The start() method includes up to three integer arguments. In the example above, start will initially apply 10 iterations of layout with no constraints, 15 iterations with only structural (user-specified) constraints and 20 iterations of layout with all constraints including non-overlap constraints. Specifying such a schedule is useful to allow the graph to untangle before making it relatively "rigid" with constraints."
+
 
 ### Troubleshooting
 
 **Versions:** If you have having difficulty getting an example to work, make sure the versions of the libraries you're using match the versions in the example. Not all examples have necessarily been updated to the latest version of the library.
+
+
+## Specifying link lengths
+
+We can set the ideal length for all the links using 
+
+```
+cola.d3adaptor().linkDistance(30) 
+```
+Here, Cola will try to keep the lengths of all edges close to the value of 30.
+
+### Set custom edge lengths for each edge (Link accessor)
+To set custom ideal lengths for each edge, use the following code:
+
+```
+var d3cola = cola.d3adaptor()
+            .linkDistance(function (l) { return l.length })
+```
+
+In the above example, the length for each edge is taken from the `links` array where each object has a `length` attribute along with the `source` and `target` attribute.
+
+e.g. 
+```
+"links": [{"source": src_id, "target": target_id, "length": 20}, ...]
+
+```
+
+The ideal lengths can also be specified using predefined functions such as `symmetricDiffLinkLengths` and `jaccardLinkLengths`.
+
+We set these in the following way 
+
+```
+d3cola
+  .links(links)
+  .jaccardLinkLengths(40)
+  .start();
+```
+
+The jaccard/symmetric link lengths are computed in the `start` function.
+For their definition, visit [cola's wiki page](https://github.com/tgdwyer/WebCola/wiki/link-lengths) .
+
 
 ## Constraints
 
@@ -58,6 +130,7 @@ d3cola.constraints(myconstraints);
 ```
 
 ### Alignment Constraints
+
 ```
 {
     "type": "alignment",
@@ -79,8 +152,10 @@ The `node` field contains the index of the nodes in the `d3.nodes(nodes)` array.
 
 TODO: Update the direction of the offset. Does -ve offset mean to the left/top and vice-versa.
 
-### Separation(Inequality) Constraints
-The separation constraints add a minimum separation between a pair of nodes along x/y axis.
+
+### Gap Constraints
+
+The gap constraints add a minimum separation between a pair of nodes along x/y axis.
 
 ```
 {"axis":"y", "left":0, "right":1, "gap":25}
@@ -95,11 +170,11 @@ nodes[0].y + gap <= nodes[1].y
 
 The `axis` supports both `x` and `y` directions. The left/right is analogous to top/bottom when the axis is `y`.
 
-NOTE: If the constraints have cyclic dependency between them, the solver will not apply any constraints. [See here](https://github.com/tgdwyer/WebCola/wiki/Constraints) for more details.
+NOTE: If the constraints have cyclic dependency between them, the solver will not apply any constraints. [Click here](https://github.com/tgdwyer/WebCola/wiki/Constraints) for more details.
 
 
 
-Separation constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
+Gap constraints also support equalities. To change the inequality constraint into an equality constraint, add `"equality":"true"` to the constraint.
 
 ```
 {"axis":"y", "left":0, "right":1, "gap":25, "equality":"true"}
@@ -143,6 +218,29 @@ To fix the node positions, set the `fixed` field to `true` inside the node objec
 
 To set the x and y coordinates of the node, set `x` and `y` fields inside the node object. 
 NOTE: If the coordinates are not fixed, these values will be updated on the next tick.
+
+### Directed Graphs 
+Flow layout adds downward separation constraints for each edge. For a directed edge (1,2) where 1 is the node index of the source node and 2 is the index for the target node, it adds constraints of the form 
+
+```
+nodes[1].y + gap <= nodes[2].y
+```
+
+This can be done using the following code
+
+```
+d3cola
+  .flowLayout('y', gap)
+  ...
+```
+
+The [example from webcola](https://ialab.it.monash.edu/webcola/examples/unix.html) says "flowLayout causes all edges not involved in a cycle (strongly connected component) to have a separation constraint generated between their source and sink, with a minimum spacing set to gap"
+
+
+The default direction for flow layout is along `y` axis which achieves vertical layout.
+Flow layout also supports `x` axis which achieves left-to-right layout.
+
+Instead of setting a global minimum separation value of `gap` between each edge endpoints, we can set custom function with link accessor to set different minimum separation for each edge.
 
 
 ## Drawing Help
