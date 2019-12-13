@@ -40,6 +40,10 @@ d3cola
   .start()
 ```
 
+### Retreiving Node Coordinates
+
+After running the layout, each node object will have an `x` and `y` member with coordinates in SVG space.
+
 
 ### Troubleshooting
 
@@ -81,3 +85,7 @@ In the graph, specify a `groups` member:
 ### Overlap Constraints
 
 Add `.avoidOverlaps(true)` to your initial `cola` call.
+
+### Edge Routing
+
+Not supported, you're on your own.
