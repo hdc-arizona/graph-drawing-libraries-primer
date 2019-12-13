@@ -163,7 +163,7 @@ svg.append("svg:defs").append("svg:marker")//SVG defs are a way of defining grap
     .style("fill", "black");
 ```
 
-[Click here to see more explanation](http://tutorials.jenkov.com/svg/marker-element.html)
+[See the Jenkov tutorial for more explanation](http://tutorials.jenkov.com/svg/marker-element.html)
 
 
 
