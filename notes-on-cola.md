@@ -200,6 +200,7 @@ setup.
 
 
 [Cola Example (Non-Nested) with Explanation](https://ialab.it.monash.edu/webcola/examples/smallworldwithgroups.html)
+[Cola Example - Layout with Hierarchical Grouping](https://ialab.it.monash.edu/webcola/examples/smallgroups.html)
 
 
 ### Overlap Constraints
