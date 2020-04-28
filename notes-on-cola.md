@@ -25,6 +25,7 @@ itself which lists the available functions, generally without documentation.
 - [Drawing Help](#drawing-help)
   - [Arrow Heads](#arrow-heads)
   - [Node Labels](#text-on-nodes)
+  - [Links](#advice-on-links)
 
 
 ## Getting Started & General Tips
