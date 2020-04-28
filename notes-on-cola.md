@@ -392,6 +392,7 @@ d3cola.on('tick', function() {
 ```
 ### Advice on Links
 When you need to link two nodes, you have to use their index number. Otherwise you are going to get this error message on console: __Uncaught TypeError: Cannot read property 'neighbours' of undefined__
+Look at [this](https://github.com/tgdwyer/WebCola/issues/128) for more information on this. 
 
 
 
